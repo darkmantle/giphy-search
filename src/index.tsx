@@ -3,13 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/home';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import View from './components/view';
 
 const Header = () => {
+
+    const location = useLocation();
+    const history = useHistory();
+
     return (
         <div className="main-header">
             <h1>Giphy Viewer v1</h1>
+            {location.pathname !== "/" ? <div className="back" onClick={() => history.goBack()}>Go back</div> : ''}
         </div>
     )
 }

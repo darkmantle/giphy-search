@@ -23,21 +23,26 @@
     }
 }
 
-.gif-details {
-    column-count: 2;
-}
-
 @media (max-width: 640px) {
     .gif-details {
         column-count: 1;
     }
-
     h2 {
         margin-top: 20px !important;
     }
 }
 
-.gif-meta .created-by {    
+@media (min-width: 641px) {
+    .gif-details {
+        display: flex;
+    }
+
+    .gif-meta {
+        margin-left: 40px;
+    }
+}
+
+.gif-meta .created-by {
     font-size: 20px;
 }
 
@@ -56,7 +61,6 @@
     font-size: 30px;
     padding-top: 0;
     margin-top: 0;
-
 }
 
 .gif-meta a {

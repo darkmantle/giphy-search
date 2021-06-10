@@ -14,3 +14,24 @@ body {
 h1 {
     font-weight: 900;
 }
+
+.main-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main-header h1 {
+    margin-bottom: 8px;
+}
+.main-header .back {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+
+.back::before {
+    content: '\2190';
+    padding-right: 8px;
+}

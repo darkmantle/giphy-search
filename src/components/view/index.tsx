@@ -24,8 +24,8 @@ const View = () => {
                     <img src={gif?.images.original.url} alt={gif?.title} />
                     <div className="gif-meta">
                         <h2>{gif.title}</h2>
-                        <div className="created-by">Created by <span>{gif.username}</span></div>
-                        <div className="date">{(new Date(gif.import_datetime)).toLocaleDateString("en-GB")}</div>
+                        {gif.username ? <div className="created-by">Created by <span>{gif.username}</span></div> : ''}
+                        <div className="date">Added {(new Date(gif.import_datetime)).toLocaleDateString("en-GB")}</div>
                         <a href={gif.url}>Open in Giphy</a>
                     </div>
                 </div>
