@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import './index.css';
 import { IGif } from "@giphy/js-types";
 import { useHistory } from 'react-router';
 import config from '../../config';
+import { map } from "lodash";
 
 function App() {
 
     const [searchTerm, setSearchTerm] = useState<string>("");
+    const [tags, setTags] = useState<string[]>();
     const [loading, setLoading] = useState<boolean>(false);
     const [gifs, setGifs] = useState<IGif[]>([]);
 
@@ -24,10 +26,40 @@ function App() {
         history.push(`/view/${gif.id}`)
     }
 
+    const onTextChange = async (e: ChangeEvent<HTMLInputElement>) => {
+        const text = e.target.value;
+        setSearchTerm(text);
+
+        const res = await fetch(`${config.giphyBaseUrl}/search/tags?api_key=${config.giphyApiKey}&q=${text}`);
+        const json = await res.json();
+
+        setTags(map(json.data, 'name'));
+    }
+
+    const doSearch = (tag: string) => {
+        setSearchTerm(tag);
+        setTags([]);
+        fetchGifs();
+    }
+
+    const Tags = () => {
+
+        return (
+            <div className="autocomplete-items">
+                {tags?.map(tag => (
+                    <div onClick={() => doSearch(tag)}>{tag}</div>
+                ))}
+            </div>
+        )
+    }
+
     return (
         <div className="main-content">
             <div className="search-area">
-                <input type="text" placeholder="Search here..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+                <div className="autocomplete">
+                    <input type="text" placeholder="Search here..." value={searchTerm} onChange={onTextChange} />
+                    <Tags />
+                </div>
                 <button type="submit" onClick={() => fetchGifs()}>Search</button>
             </div>
             <div className="results-area">
